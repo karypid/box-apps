@@ -1,0 +1,24 @@
+FROM quay.io/fedora/fedora-toolbox:40
+
+# Support Nvidia Container Runtime (https://developer.nvidia.com/nvidia-container-runtime)
+# ENV NVIDIA_VISIBLE_DEVICES all
+# ENV NVIDIA_DRIVER_CAPABILITIES all
+
+LABEL com.github.containers.toolbox="true" \
+    usage="This image is meant to be used with the toolbox or distrobox commands" \
+    summary="Citrix Workspace App" \
+    maintainer="karypid@gmail.com"
+
+COPY extra-packages /
+RUN dnf -y update && \
+    grep -v '^#' /extra-packages | xargs dnf -y install
+RUN rm /extra-packages
+
+RUN mkdir /container && chmod a+rx /container
+COPY download-icaclient.sh /container/
+RUN chmod a+rx /container/download-icaclient.sh
+
+WORKDIR /container
+RUN /container/download-icaclient.sh
+RUN dnf install -y /container/ICAClient-rhel-24.5.0.76-0.x86_64.rpm
+
