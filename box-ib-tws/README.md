@@ -1,5 +1,7 @@
 # Boxed app: Trader Workstation (TWS)
 
+Either run `sh build-distrobox.sh` or `sh build-toolbox.sh`.
+
 Currently the app is NOT exported so there is not launver icon for it. To run use:
 
 - Toolbox
