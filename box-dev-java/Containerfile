@@ -7,18 +7,17 @@ LABEL com.github.containers.toolbox="true" \
     maintainer="karypid@gmail.com"
 
 # Ubuntu packages
-COPY packages.ubuntu /toolbox-packages
+COPY container /container
 RUN apt-get update && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install \
-    $(cat toolbox-packages | xargs) && \
-    rm -rd /var/lib/apt/lists/* && \
-    rm /toolbox-packages && \
+    $(cat /container/packages.ubuntu | xargs)
+RUN rm -rd /var/lib/apt/lists/* && \
+    rm /container/packages.ubuntu && \
     true
 
 # Install Eclipse
-RUN mkdir -p /oomph/alxclipse
-COPY alxclipse /oomph/alxclipse
+RUN mkdir -p /oomph
 WORKDIR /oomph
 # Download OOMPH CONSOLE INSTALLER - see: https://github.com/a-langer/eclipse-oomph-console
 RUN mvn org.apache.maven.plugins:maven-dependency-plugin:3.3.0:unpack \
@@ -28,12 +27,10 @@ RUN ./eclipse-installer/eclipse-inst -nosplash -application org.eclipse.oomph.co
     -Doomph.installer.layout="text" \
     -Doomph.installation.location="/opt/" \
     -Doomph.workspace.location="/oomph/inst-ws" \
-    -Doomph.redirection.setupsDir="index:/->/oomph/alxclipse/" \
+    -Doomph.redirection.setupsDir="index:/->/container/alxclipse/" \
     -Doomph.product.id="alxclipse:2024-09"
 
 # Prepare for SDKman (needs to be installed on entry)
 RUN mkdir -p /opt/sdk
-# COPY sdkman.sh /etc/profile.d/
-COPY configure-container.sh /opt/sdk/
-RUN chmod a+rx /opt/sdk/configure-container.sh
+RUN chmod a+rx /container/configure-container.sh
 
