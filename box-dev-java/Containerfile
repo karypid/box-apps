@@ -33,5 +33,7 @@ RUN ./eclipse-installer/eclipse-inst -nosplash -application org.eclipse.oomph.co
 
 # Prepare for SDKman (needs to be installed on entry)
 RUN mkdir -p /opt/sdk
-COPY sdkman.sh /etc/profile.d/
+# COPY sdkman.sh /etc/profile.d/
+COPY configure-container.sh /opt/sdk/
+RUN chmod a+rx /opt/sdk/configure-container.sh
 
