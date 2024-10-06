@@ -31,3 +31,7 @@ RUN ./eclipse-installer/eclipse-inst -nosplash -application org.eclipse.oomph.co
     -Doomph.redirection.setupsDir="index:/->/oomph/alxclipse/" \
     -Doomph.product.id="alxclipse:2024-09"
 
+# Prepare for SDKman (needs to be installed on entry)
+RUN mkdir -p /opt/sdk
+COPY sdkman.sh /etc/profile.d/
+
