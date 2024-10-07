@@ -9,17 +9,14 @@ LABEL com.github.containers.toolbox="true" \
     summary="Interactive Brokers - Trader Workstation" \
     maintainer="karypid@gmail.com"
 
-COPY extra-packages /
+COPY container /container
 RUN dnf -y update && \
-    grep -v '^#' /extra-packages | xargs dnf -y install
-RUN rm /extra-packages
-
-RUN mkdir /container && chmod a+rx /container
-COPY download-ib-tws.sh configure-container.sh /container/
-RUN chmod a+rx /container/download-ib-tws.sh
+    grep -v '^#' /container/extra-packages | xargs dnf -y install
+RUN rm /container/extra-packages
 
 # Download installers
 WORKDIR /container
+RUN chmod a+rx /container/download-ib-tws.sh
 RUN /container/download-ib-tws.sh stable
 RUN /container/download-ib-tws.sh latest
 

@@ -44,6 +44,9 @@ plocate
 progress
 software-properties-common
 
+cmake
+g++
+
 maven
 openjdk-21-jdk
 visualvm
