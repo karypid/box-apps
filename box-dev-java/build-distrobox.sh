@@ -8,4 +8,5 @@ podman image build -t "$_container" . && \
 
 # Actual installation using logged in account's uid/gid
 distrobox enter -n "$_container" -- sh /container/configure-container.sh
+../common/create-desktop-entry.sh --container dbox-dev-java --exec /opt/alxclipse/eclipse --icon /opt/alxclipse/icon.xpm --name Alxclipse
 

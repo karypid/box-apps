@@ -11,5 +11,10 @@ distrobox enter -n "$_container" -- sh /container/configure-container.sh stable
 distrobox enter -n "$_container" -- sh /container/configure-container.sh latest
 
 # export apps to host
-# distrobox enter -n "$_container" -- distrobox-export --app Citrix
+../common/create-desktop-entry.sh --container dbox-ib-tws \
+	--exec "/inst/tws/stable/tws -J-DjtsConfigDir=/home/karypid@ad.home.lan/Jts %U" \
+	--icon /inst/tws/stable/.install4j/tws.png --name "Trader Workstation 10.19"
+../common/create-desktop-entry.sh --container dbox-ib-tws \
+	--exec "/inst/tws/latest/tws -J-DjtsConfigDir=/home/karypid@ad.home.lan/Jts %U" \
+	--icon /inst/tws/latest/.install4j/tws.png --name "Trader Workstation 10.31"
 
