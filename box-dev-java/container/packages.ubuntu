@@ -44,6 +44,8 @@ plocate
 progress
 software-properties-common
 
+mgitstatus
+
 cmake
 g++
 
