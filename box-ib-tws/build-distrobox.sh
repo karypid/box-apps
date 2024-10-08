@@ -11,10 +11,10 @@ distrobox enter -n "$_container" -- sh /container/configure-container.sh stable
 distrobox enter -n "$_container" -- sh /container/configure-container.sh latest
 
 # export apps to host
-../common/create-desktop-entry.sh --container dbox-ib-tws \
+../common/create-desktop-entry.sh --container $_container \
 	--exec "/inst/tws/stable/tws -J-DjtsConfigDir=/home/karypid@ad.home.lan/Jts %U" \
-	--icon /inst/tws/stable/.install4j/tws.png --name "Trader Workstation 10.19"
-../common/create-desktop-entry.sh --container dbox-ib-tws \
+	--icon /inst/tws/stable/.install4j/tws.png --name "IB TWS 10.19" --wmclass install4j-jclient-LoginFrame
+../common/create-desktop-entry.sh --container $_container \
 	--exec "/inst/tws/latest/tws -J-DjtsConfigDir=/home/karypid@ad.home.lan/Jts %U" \
-	--icon /inst/tws/latest/.install4j/tws.png --name "Trader Workstation 10.31"
+	--icon /inst/tws/latest/.install4j/tws.png --name "IB TWS 10.31" --wmclass install4j-jclient-LoginFrame
 

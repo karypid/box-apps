@@ -15,6 +15,7 @@ Options:
         --exec/-e:              command to execute within the container
         --icon/-i:              icon file to use
         --name/-n:              name of generated desktop entry
+        --wmclass/-w:           set StartupWMClass property to this value
 	--verbose/-v:           show more verbosity
         --help/-h:              show this message
 EOF
@@ -62,6 +63,13 @@ while :; do
                                 shift
                         fi
                         ;;
+                -w | --wmclass)
+                        if [ -n "$2" ]; then
+                                wmclass="$2"
+                                shift
+                                shift
+                        fi
+                        ;;
                 -*) # Invalid options.
                         printf >&2 "ERROR: Invalid flag '%s'\n\n" "$1"
                         show_help
@@ -97,8 +105,9 @@ fi
 
 _host_apps_dir="${_host_xdg_dir}/applications"
 _host_desktop_entry=$( echo "${container}-${name}" | sed 's/ /_/' )
+_host_desktop_file="${_host_apps_dir}/${_host_desktop_entry}.desktop"
 mkdir -p "$_host_apps_dir"
-cat << EOF > "${_host_apps_dir}/${_host_desktop_entry}.desktop"
+cat << EOF > "${_host_desktop_file}"
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -106,4 +115,7 @@ Name=$name (on $container)
 Icon=$_host_icon
 Exec=/usr/bin/distrobox-enter -n $container -- $exec
 EOF
+if [ ! -z "$wmclass" ]; then
+	echo "StartupWMClass=$wmclass" >> "${_host_desktop_file}"
+fi
 
