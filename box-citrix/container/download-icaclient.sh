@@ -11,3 +11,5 @@ _rpmFile=$(echo "$_source64" | cut -d'?' -f 1 | rev | cut -d'/' -f 1 | rev)
 
 [ -f "$_rpmFile" ] || curl "$_source64" -o $_rpmFile
 
+echo "Downloaded: $_rpmFile" into: `pwd`
+

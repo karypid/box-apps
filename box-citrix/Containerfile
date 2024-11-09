@@ -9,16 +9,12 @@ LABEL com.github.containers.toolbox="true" \
     summary="Citrix Workspace App" \
     maintainer="karypid@gmail.com"
 
-COPY extra-packages /
-RUN dnf -y update && \
-    grep -v '^#' /extra-packages | xargs dnf -y install
-RUN rm /extra-packages
-
 RUN mkdir /container && chmod a+rx /container
-COPY download-icaclient.sh /container/
+COPY container /container
 RUN chmod a+rx /container/download-icaclient.sh
+RUN dnf -y update && \
+    grep -v '^#' /container/extra-packages | xargs dnf -y install
 
 WORKDIR /container
-RUN /container/download-icaclient.sh
-RUN dnf install -y /container/ICAClient-rhel-24.5.0.76-0.x86_64.rpm
+RUN /container/download-icaclient.sh && dnf install -y /container/ICAClient-rhel-*.rpm
 
