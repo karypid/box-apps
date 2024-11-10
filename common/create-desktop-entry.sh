@@ -101,6 +101,12 @@ if [ ! -z "${icon}" ]; then
 	mkdir -p "$_host_icon_dir"
 	_host_icon="$_host_icon_dir/$_ct_icon_fname"
 	podman cp "$container":"$icon" "$_host_icon"
+	if [[ ! ${_host_icon##*.xpm} ]]; then
+		_host_png_icon=${_host_icon%.xpm}.png
+		echo "Converting icon to png in: ${_host_png_icon}"
+		magick "${_host_icon}" "${_host_png_icon}" && rm -f "${_host_icon}"
+		_host_icon=${_host_png_icon}
+	fi
 fi
 
 _host_apps_dir="${_host_xdg_dir}/applications"
