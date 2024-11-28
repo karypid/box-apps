@@ -15,12 +15,14 @@ Options:
         --exec/-e:              command to execute within the container
         --icon/-i:              icon file to use
         --name/-n:              name of generated desktop entry
+	--launcher/-l:          launcer (toolbox or distrobox)
         --wmclass/-w:           set StartupWMClass property to this value
 	--verbose/-v:           show more verbosity
         --help/-h:              show this message
 EOF
 }
 
+launcher=""
 container=""
 exec=""
 verbose=0
@@ -63,6 +65,13 @@ while :; do
                                 shift
                         fi
                         ;;
+                -l | --launcher)
+                        if [ -n "$2" ]; then
+                                launcher="$2"
+                                shift
+                                shift
+                        fi
+                        ;;
                 -w | --wmclass)
                         if [ -n "$2" ]; then
                                 wmclass="$2"
@@ -87,6 +96,20 @@ if [ "${verbose}" -ne 0 ]; then
         set -o xtrace
 fi
 
+if [ -z "${launcher}" ]; then
+	[[ "${container}" == tbox* ]] && launcher=toolbox
+	[[ "${container}" == dbox* ]] && launcher=distrobox
+fi
+if [ "${launcher}" == "distrobox" ]; then
+	_launch_cmd="/usr/bin/distrobox-enter -n \"$container\""
+elif [ "${launcher}" == "toolbox" ]; then
+	_launch_cmd="/usr/bin/toolbox run -c \"$container\""
+else
+        printf >&2 "Error: missing launcher and/or container name does not start with tbox/dbox.\n"
+        exit 2
+fi
+#echo "Launcher type: ${launcher} -- ${_launch_cmd}"
+
 if [ -z "${container}" ] || [ -z "${exec}" ] || [ -z "${name}" ]; then
         printf >&2 "Error: Invalid arguments.\n"
         printf >&2 "Error: missing container and/or execute command.\n"
@@ -109,6 +132,8 @@ if [ ! -z "${icon}" ]; then
 	fi
 fi
 
+
+
 _host_apps_dir="${_host_xdg_dir}/applications"
 _host_desktop_entry=$( echo "${container}-${name}" | sed 's/ /_/' )
 _host_desktop_file="${_host_apps_dir}/${_host_desktop_entry}.desktop"
@@ -119,7 +144,7 @@ Encoding=UTF-8
 Type=Application
 Name=$name (on $container)
 Icon=$_host_icon
-Exec=/usr/bin/distrobox-enter -n $container -- $exec
+Exec=$_launch_cmd -- $exec
 EOF
 if [ ! -z "$wmclass" ]; then
 	echo "StartupWMClass=$wmclass" >> "${_host_desktop_file}"

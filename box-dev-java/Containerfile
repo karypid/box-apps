@@ -1,11 +1,5 @@
 FROM quay.io/toolbx/ubuntu-toolbox:24.04
 
-LABEL com.github.containers.toolbox="true" \
-    name="tbox-dev-java" \
-    usage="This image is meant to be used with the toolbox or distrobox command" \
-    summary="A cloud-native terminal experience powered by Ubuntu" \
-    maintainer="karypid@gmail.com"
-
 # Ubuntu packages
 COPY container /container
 RUN apt-get update && \
