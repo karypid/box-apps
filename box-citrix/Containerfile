@@ -4,11 +4,6 @@ FROM quay.io/fedora/fedora-toolbox:40
 # ENV NVIDIA_VISIBLE_DEVICES all
 # ENV NVIDIA_DRIVER_CAPABILITIES all
 
-LABEL com.github.containers.toolbox="true" \
-    usage="This image is meant to be used with the toolbox or distrobox commands" \
-    summary="Citrix Workspace App" \
-    maintainer="karypid@gmail.com"
-
 RUN mkdir /container && chmod a+rx /container
 COPY container /container
 RUN chmod a+rx /container/download-icaclient.sh

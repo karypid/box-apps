@@ -12,3 +12,5 @@ distrobox enter -n "$_container" -- sh /container/configure-container.sh
 # export apps
 ../common/create-desktop-entry.sh --container $_container --exec /opt/alxclipse/eclipse --icon /opt/alxclipse/icon.xpm --name Alxclipse --wmclass Eclipse
 
+../common/ptyxis-profile.sh -l "Java Dev" -n dbox-dev-java
+
