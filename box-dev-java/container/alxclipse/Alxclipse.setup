@@ -316,5 +316,85 @@
     </setupTask>
     <description>Alxclipse for 2024-09</description>
   </version>
+  <version name="2024-12"
+      label="2024-12">
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        label="${scope.product.label} (${scope.product.version.label})">
+      <requirement
+          name="org.eclipse.platform.ide"/>
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.rcp.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.feature.group"/>
+      <requirement
+          name="org.eclipse.m2e.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.egit.feature.group"/>
+      <requirement
+          name="org.eclipse.cdt.feature.group"/>
+      <requirement
+          name="org.eclipse.xtext.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.xtend.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.epp.mpc.feature.group"/>
+      <requirement
+          name="org.eclipse.buildship.feature.group"/>
+      <requirement
+          name="org.eclipse.eclemma.feature.feature.group"/>
+      <requirement
+          name="com.github.spotbugs.plugin.eclipse.feature.group"/>
+      <requirement
+          name="com.genuitec.eclipse.theming.core.feature.feature.group"/>
+      <requirement
+          name="net.sf.eclipsecs.feature.group"/>
+      <requirement
+          name="org.sf.feeling.decompiler.feature.group"/>
+      <requirement
+          name="org.sf.feeling.decompiler.procyon.feature.group"/>
+      <requirement
+          name="com.github.sevntu.checkstyle.checks.feature.feature.group"/>
+      <requirement
+          name="org.sf.feeling.decompiler.cfr.feature.group"/>
+      <requirement
+          name="org.eclipse.m2e.logback.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mat.chart.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.tm.terminal.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mat.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.oomph.setup.sdk.feature.group"/>
+      <requirement
+          name="ch.acanda.eclipse.pmd.feature.feature.group"/>
+      <requirement
+          name="org.sonatype.tycho.m2e.feature.feature.group"/>
+      <repository
+          url="https://sevntu-checkstyle.github.io/sevntu.checkstyle/update-site/"/>
+      <repository
+          url="https://download.eclipse.org/releases/2024-09"/>
+      <repository
+          url="https://s3.amazonaws.com/update.eclemma.org/"/>
+      <repository
+          url="https://spotbugs.github.io/eclipse/"/>
+      <repository
+          url="http://www.genuitec.com/updates/devstyle/ci"/>
+      <repository
+          url="http://download.eclipse.org/buildship/updates/latest"/>
+      <repository
+          url="https://checkstyle.org/eclipse-cs-update-site"/>
+      <repository
+          url="https://ecd-plugin.github.io/update"/>
+      <repository
+          url="https://eclipse-pmd.acanda.ch/release/latest"/>
+      <repository
+          url="https://github.com/tesla/m2eclipse-tycho/releases/download/latest/"/>
+    </setupTask>
+    <description>Alxclipse for 2024-12</description>
+  </version>
   <description>Alxclipse augments Eclipse JDT/CDT with Alex's favorite packages.</description>
 </setup:Product>
