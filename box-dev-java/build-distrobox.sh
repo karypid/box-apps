@@ -10,7 +10,7 @@ podman image build -t "$_container" . && \
 distrobox enter -n "$_container" -- sh /container/configure-container.sh
 
 # export apps
-../common/create-desktop-entry.sh --container $_container --exec /opt/alxclipse/eclipse --icon /opt/alxclipse/icon.xpm --name Alxclipse --wmclass Eclipse
+../common/create-desktop-entry.sh --container $_container --exec "env WEBKIT_DISABLE_COMPOSITING_MODE=1 /opt/alxclipse/eclipse" --icon /opt/alxclipse/icon.xpm --name Alxclipse --wmclass Eclipse
 
 ../common/ptyxis-profile.sh -l "Java Dev" -n dbox-dev-java
 

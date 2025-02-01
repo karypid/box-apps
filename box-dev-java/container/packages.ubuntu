@@ -43,6 +43,7 @@ pigz
 plocate
 progress
 software-properties-common
+webkit2gtk-driver
 
 mgitstatus
 
