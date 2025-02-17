@@ -348,6 +348,8 @@
       <requirement
           name="com.genuitec.eclipse.theming.core.feature.feature.group"/>
       <requirement
+          name="com.genuitec.copilot4eclipse.feature.feature.group"/>
+      <requirement
           name="net.sf.eclipsecs.feature.group"/>
       <requirement
           name="org.sf.feeling.decompiler.feature.group"/>
@@ -373,6 +375,12 @@
           name="org.sonatype.tycho.m2e.feature.feature.group"/>
       <requirement
           name="org.eclipse.m2e.lemminx.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.bcoview.feature.feature.group"/>
+      <requirement
+          name="net.certiv.fluent.dt.feature.feature.group"/>
+      <repository
+          url="https://www.certiv.net/updates"/>
       <repository
           url="https://sevntu-checkstyle.github.io/sevntu.checkstyle/update-site/"/>
       <repository
@@ -383,6 +391,8 @@
           url="https://spotbugs.github.io/eclipse/"/>
       <repository
           url="http://www.genuitec.com/updates/devstyle/ci"/>
+      <repository
+	  url="https://www.genuitec.com/updates/copilot4eclipse"/>
       <repository
           url="http://download.eclipse.org/buildship/updates/latest"/>
       <repository
