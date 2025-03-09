@@ -5,11 +5,13 @@ FROM quay.io/fedora/fedora-toolbox:40
 # ENV NVIDIA_DRIVER_CAPABILITIES all
 
 RUN mkdir /container && chmod a+rx /container
-COPY container /container
-RUN chmod a+rx /container/download-icaclient.sh
+COPY container/extra-packages /container/extra-packages
 RUN dnf -y update && \
     grep -v '^#' /container/extra-packages | xargs dnf -y install
 
+COPY container /container
+RUN chmod a+rx /container/*.sh
 WORKDIR /container
 RUN /container/download-icaclient.sh && dnf install -y /container/ICAClient-rhel-*.rpm
+RUN /container/download-zoom.sh && dnf install -y /container/zoomvdi-universal-plugin-centos_*.rpm
 
