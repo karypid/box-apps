@@ -330,6 +330,8 @@
       <requirement
           name="org.eclipse.jdt.feature.group"/>
       <requirement
+          name="org.eclipse.jdt.bcoview.feature.feature.group"/>
+      <requirement
           name="org.eclipse.m2e.feature.feature.group"/>
       <requirement
           name="org.eclipse.egit.feature.group"/>
@@ -342,13 +344,25 @@
       <requirement
           name="org.eclipse.buildship.feature.group"/>
       <requirement
+          name="org.eclipse.m2e.logback.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mat.chart.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.tm.terminal.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mat.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.oomph.setup.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.m2e.lemminx.feature.feature.group"/>
+      <requirement
           name="org.eclipse.eclemma.feature.feature.group"/>
+      <requirement
+          name="org.sonatype.tycho.m2e.feature.feature.group"/>
       <requirement
           name="com.github.spotbugs.plugin.eclipse.feature.group"/>
       <requirement
-          name="com.genuitec.eclipse.theming.core.feature.feature.group"/>
-      <requirement
-          name="com.genuitec.copilot4eclipse.feature.feature.group"/>
+          name="ch.acanda.eclipse.pmd.feature.feature.group"/>
       <requirement
           name="net.sf.eclipsecs.feature.group"/>
       <requirement
@@ -356,9 +370,69 @@
       <requirement
           name="org.sf.feeling.decompiler.procyon.feature.group"/>
       <requirement
-          name="com.github.sevntu.checkstyle.checks.feature.feature.group"/>
-      <requirement
           name="org.sf.feeling.decompiler.cfr.feature.group"/>
+      <requirement
+          name="net.certiv.fluent.dt.feature.feature.group"/>
+      <requirement
+          name="com.genuitec.eclipse.theming.core.feature.feature.group"/>
+      <requirement
+          name="com.genuitec.copilot4eclipse.feature.feature.group"/>
+      <requirement
+          name="com.github.sevntu.checkstyle.checks.feature.feature.group"/>
+      <repository
+          url="https://download.eclipse.org/releases/2024-12"/>
+      <repository
+          url="https://update.eclemma.org/"/>
+      <repository
+          url="http://download.eclipse.org/buildship/updates/latest"/>
+      <repository
+          url="https://github.com/tesla/m2eclipse-tycho/releases/download/latest/"/>
+      <repository
+          url="https://spotbugs.github.io/eclipse/"/>
+      <repository
+          url="https://eclipse-pmd.acanda.ch/release/latest"/>
+      <repository
+          url="https://checkstyle.org/eclipse-cs-update-site"/>
+      <repository
+          url="https://ecd-plugin.github.io/update"/>
+      <repository
+          url="https://www.certiv.net/updates"/>
+      <repository
+          url="http://www.genuitec.com/updates/devstyle/ci"/>
+      <repository
+          url="https://www.genuitec.com/updates/copilot4eclipse"/>
+      <repository
+          url="https://sevntu-checkstyle.github.io/sevntu.checkstyle/update-site/"/>
+    </setupTask>
+    <description>Alxclipse for 2024-12</description>
+  </version>
+  <version name="2025-03"
+      label="2025-03">
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        label="${scope.product.label} (${scope.product.version.label})">
+      <requirement
+          name="org.eclipse.platform.ide"/>
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.rcp.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.bcoview.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.m2e.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.egit.feature.group"/>
+      <requirement
+          name="org.eclipse.cdt.feature.group"/>
+      <requirement
+          name="org.eclipse.xtend.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.epp.mpc.feature.group"/>
+      <requirement
+          name="org.eclipse.buildship.feature.group"/>
       <requirement
           name="org.eclipse.m2e.logback.feature.feature.group"/>
       <requirement
@@ -370,41 +444,49 @@
       <requirement
           name="org.eclipse.oomph.setup.sdk.feature.group"/>
       <requirement
-          name="ch.acanda.eclipse.pmd.feature.feature.group"/>
-      <requirement
-          name="org.sonatype.tycho.m2e.feature.feature.group"/>
-      <requirement
           name="org.eclipse.m2e.lemminx.feature.feature.group"/>
       <requirement
-          name="org.eclipse.jdt.bcoview.feature.feature.group"/>
+          name="org.eclipse.eclemma.feature.feature.group"/>
       <requirement
-          name="net.certiv.fluent.dt.feature.feature.group"/>
+          name="org.sonatype.tycho.m2e.feature.feature.group"
+          versionRange="[0.0.0,0.11.0)"/>
+      <requirement
+          name="com.github.spotbugs.plugin.eclipse.feature.group"
+          versionRange="[0.0.0,4.10.0)"/>
+      <requirement
+          name="ch.acanda.eclipse.pmd.feature.feature.group"
+          versionRange="[0.0.0,4.7.0)"/>
+      <requirement
+          name="net.sf.eclipsecs.feature.group"
+          versionRange="[0.0.0,10.22.0)"/>
+      <requirement
+          name="org.sf.feeling.decompiler.fernflower.feature.group"
+          versionRange="[0.0.0,3.6.0)"/>
+      <requirement
+          name="org.sf.feeling.decompiler.procyon.feature.group"
+          versionRange="[0.0.0,3.6.0)"/>
+      <requirement
+          name="org.sf.feeling.decompiler.cfr.feature.group"
+          versionRange="[0.0.0,3.6.0)"/>
+      <requirement
+          name="org.sf.feeling.decompiler.jd.feature.group"
+          versionRange="[0.0.0,3.6.0)"/>
       <repository
-          url="https://www.certiv.net/updates"/>
+          url="https://download.eclipse.org/releases/2025-03"/>
       <repository
-          url="https://sevntu-checkstyle.github.io/sevntu.checkstyle/update-site/"/>
+          url="https://download.eclipse.org/eclipse/updates/4.35"/>
       <repository
-          url="https://download.eclipse.org/releases/2024-12"/>
-      <repository
-          url="https://s3.amazonaws.com/update.eclemma.org/"/>
+          url="https://github.com/tesla/m2eclipse-tycho/releases/download/latest/"/>
       <repository
           url="https://spotbugs.github.io/eclipse/"/>
       <repository
-          url="http://www.genuitec.com/updates/devstyle/ci"/>
-      <repository
-	  url="https://www.genuitec.com/updates/copilot4eclipse"/>
-      <repository
-          url="http://download.eclipse.org/buildship/updates/latest"/>
+          url="https://eclipse-pmd.acanda.ch/release/4.6"/>
       <repository
           url="https://checkstyle.org/eclipse-cs-update-site"/>
       <repository
           url="https://ecd-plugin.github.io/update"/>
-      <repository
-          url="https://eclipse-pmd.acanda.ch/release/latest"/>
-      <repository
-          url="https://github.com/tesla/m2eclipse-tycho/releases/download/latest/"/>
     </setupTask>
-    <description>Alxclipse for 2024-12</description>
+    <description>Alxclipse for 2025-03</description>
   </version>
-  <description>Alxclipse augments Eclipse JDT/CDT with Alex's favorite packages.</description>
+  <description>Alxclipse augments Eclipse JDT/CDT with my favorite packages.</description>
 </setup:Product>
