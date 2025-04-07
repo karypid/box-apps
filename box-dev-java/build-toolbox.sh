@@ -15,3 +15,5 @@ toolbox run -c "$_container" -- sh /container/configure-container.sh || exit 1
 echo Creating desktop entry...
 ../common/create-desktop-entry.sh --container $_container --exec "env WEBKIT_DISABLE_COMPOSITING_MODE=1 /opt/alxclipse/eclipse" --icon /opt/alxclipse/icon.xpm --name AlxclipseTbox --wmclass Eclipse
 
+#../common/ptyxis-profile.sh -l "Java Dev" -n tbox-dev-java
+

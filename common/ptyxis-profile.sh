@@ -42,9 +42,9 @@ validate_params() {
     exit 1
   fi
 
-  # Check if both name and id are provided, but not both
+  # Check that exactly one of container name or id are provided
   if [ ! -z "$CONTAINER_NAME" ] && [ ! -z "$CONTAINER_ID" ]; then
-    echo "Error: Exactly one of --container-name and --container-id must be provided."
+    echo "Error: Exactly one of --container-name and --container-id must be provided, but not both."
     exit 1
   elif [ -n "$CONTAINER_NAME" ] || [ -n "$CONTAINER_ID" ]; then
     if [ -n "$CONTAINER_NAME" ]; then
@@ -59,10 +59,11 @@ validate_params() {
 
   # Print values for debugging purposes
   echo "Label: $LABEL"
-  echo "Container ID: $CONTAINER_ID"
-  echo "Container Name: $CONTAINER_NAME"
+  test ! -z "$CONTAINER_ID" && echo "Container ID: $CONTAINER_ID"
+  test ! -z "$CONTAINER_NAME" && echo "Container Name: $CONTAINER_NAME"
 }
 
+# Looks up the profile id for a given profile name, along with its 
 find_ptyxis_profile() {
   target_label=$1
   PTYXIS_PROFILES=$(dconf list /org/gnome/Ptyxis/Profiles/| while read line; do echo "${line::-1}"; done)
@@ -88,34 +89,70 @@ strip_edge_char() {
   echo "$str"
 }
 
-# Call the new function to parse arguments
+find_distrobox_container() {
+  distrobox_container=$(distrobox ls | grep $1 | cut -d' ' -f1)
+  if [ ! -z "$distrobox_container" ]; then
+    podman_container=$(podman inspect $distrobox_container --format='{{.ID}}') || return
+    echo "$distrobox_container | $podman_container"
+  fi
+}
+
+find_toolbox_container() {
+  toolbox_container=$(toolbox list --containers | grep $1 | cut -d' ' -f1)
+  if [ ! -z "$toolbox_container" ]; then
+    podman_container=$(podman inspect $toolbox_container --format='{{.ID}}') || return
+    echo "$toolbox_container | $podman_container"
+  fi
+}
+
 parse_arguments "$@"
 validate_params
 
 profile_info=($(find_ptyxis_profile "$LABEL"))
+test -z "$profile_info" && ( echo "Could not find ptyxis profile for: $LABEL" ; exit 1 )
 profile_id=${profile_info[0]}
 profile_container_sid=${profile_info[1]}
+echo "Profile id: $profile_id"
+echo "Profile short container id sid: $profile_container_sid"
 
-distrobox_container=$(distrobox ls | grep $profile_container_sid | cut -d' ' -f1)
-if [ ! -z "$distrobox_container" ]; then
-  podman_container=$(podman inspect $distrobox_container --format='{{.ID}}')
+echo Checking existence of $profile_container_sid in distrobox...
+r=$(find_distrobox_container $profile_container_sid)
+distrobox_container=$(echo $r | cut -d'|' -f1)
+podman_container=$(echo $r | cut -d'|' -f2)
+if [ -z "$podman_container" ]; then
+  echo Checking existence of $profile_container_sid in toolbox...
+  r=$(find_toolbox_container $profile_container_sid)
+  toolobox_container=$(echo $r | cut -d'|' -f1)
+  podman_container=$(echo $r | cut -d'|' -f2)
 fi
 
 if [ ! -z "$podman_container" ]; then
-  distrobox_name=$(distrobox ls | grep $profile_container_sid | cut -d'|' -f2)
-  distrobox_name=$(strip_edge_char "${distrobox_name}" " ")
-  echo "Profile $profile_id is called $LABEL with existing container $profile_container_sid with distrobox name _${distrobox_name}_"
+  box_name=$(toolbox list --containers | grep $profile_container_sid | cut -d' ' -f3)
+  box_name=$(strip_edge_char "${box_name}" " ")
+  echo "Profile $profile_id is called $LABEL with existing container $profile_container_sid and distrobox name _${box_name}_"
+  gsettings list-recursively org.gnome.Ptyxis.Profile:/org/gnome/Ptyxis/Profiles/$profile_id/
+  echo "NOT touching existing config..."
+  test ! "$box_name" = "$CONTAINER_NAME" && echo NOTE: THE CONTAINER FOUND \($box_name\) DOES NOT MATCH GIVEN \($CONTAINER_NAME\)
+  exit 1
+fi
+
+echo Container $profile_container_sid in profile no longer exists, safe to overwrite with $CONTAINER_NAME
+
+echo Checking distrobox for $CONTAINER_NAME
+r=$(find_distrobox_container $CONTAINER_NAME)
+box_container=$(echo $r | cut -d'|' -f1)
+if [ -z "$box_container" ]; then
+  echo Checking toolbox for $CONTAINER_NAME
+  r=$(find_toolbox_container $CONTAINER_NAME)
+  box_container=$(echo $r | cut -d'|' -f1)
+  echo Found in toolbox: $box_container
 else
-  distrobox_id=$(distrobox ls | grep $CONTAINER_NAME | cut -d'|' -f1)
-  distrobox_id=$(strip_edge_char "${distrobox_id}" " ")
-  echo "Profile $profile_id is called $LABEL with MISSING container $profile_container_sid with distrobox id _${distrobox_id}_"
-  if [ ! -z "${distrobox_id}" ]; then
-    podman_container=$(podman inspect $distrobox_id --format='{{.ID}}')
-    echo "Found distrobox container with matching id: $distrobox_id for name: ${CONTAINER_NAME}"
-    echo "Podman container full id: $podman_container"
-    gsettings set org.gnome.Ptyxis.Profile:/org/gnome/Ptyxis/Profiles/${profile_id}/ default-container ${podman_container}
-  else
-    echo "Also unable to find distrobox container with matching name: ${CONTAINER_NAME}"
-  fi
+  echo Found in distrobox: $box_container
+fi
+podman_container=$(echo $r | cut -d'|' -f2)
+
+if [ ! -z "$podman_container" ]; then
+  echo "Profile $profile_id is called $LABEL with MISSING container $profile_container_sid - replacing with $podman_container"
+  gsettings set org.gnome.Ptyxis.Profile:/org/gnome/Ptyxis/Profiles/${profile_id}/ default-container ${podman_container}
 fi
 
