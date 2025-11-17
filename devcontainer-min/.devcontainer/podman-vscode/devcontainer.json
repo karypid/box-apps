@@ -1,0 +1,12 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Python 3 as vscode user",
+	"image": "mcr.microsoft.com/devcontainers/python:2-3.12-bullseye",
+    // image must use a user with UID 1000 for this to work, which is the default 
+    // for Microsoft devcontainer images (user vscode)
+    "runArgs": [
+        "--userns=keep-id:uid=1000,gid=1000" // container user 1000 is mapped to logged in host user
+    ],
+    "updateRemoteUserUID": false
+}
