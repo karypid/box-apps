@@ -1,0 +1,36 @@
+FROM quay.io/toolbx/ubuntu-toolbox:latest
+ARG ALXVER=2024-12
+RUN echo ALVER is $ALXVER
+
+# Ubuntu packages
+RUN mkdir -p /container
+COPY container/packages.ubuntu /container/packages
+RUN apt-get update && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    $(cat /container/packages | xargs)
+RUN rm -rd /var/lib/apt/lists/* && \
+    rm /container/packages && \
+    true
+
+# Install Eclipse
+RUN mkdir -p /oomph
+WORKDIR /oomph
+# Download OOMPH CONSOLE INSTALLER - see: https://github.com/a-langer/eclipse-oomph-console
+RUN mvn org.apache.maven.plugins:maven-dependency-plugin:3.3.0:unpack \
+    -Dartifact=com.github.a-langer:org.eclipse.oomph.console.product:LATEST:tar.gz:linux.gtk.x86_64 \
+    -DoutputDirectory=./ -Dproject.basedir=./
+
+COPY container /container
+# Run OOMPH to install packages
+RUN ./eclipse-installer/eclipse-inst -nosplash -application org.eclipse.oomph.console.application -vmargs \
+    -Doomph.installer.layout="text" \
+    -Doomph.installation.location="/opt/" \
+    -Doomph.workspace.location="/oomph/inst-ws" \
+    -Doomph.redirection.setupsDir="index:/->/container/alxclipse/" \
+    -Doomph.product.id="alxclipse:${ALXVER}"
+
+# Prepare for SDKman (needs to be installed on entry)
+RUN mkdir -p /opt/sdk
+RUN chmod a+rx /container/configure-container.sh
+
