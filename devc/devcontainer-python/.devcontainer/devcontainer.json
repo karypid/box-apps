@@ -1,0 +1,25 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+    "name": "Mise (python) as vscode user",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers-extra/features/mise:1": {}
+    },
+    "runArgs": [
+        "--userns=keep-id:uid=1000,gid=1000" // container user 1000 is mapped to logged in host user
+    ],
+    "updateRemoteUserUID": false,
+    "postCreateCommand": ".devcontainer/postCreate.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python", // Core Python support (debugging, running)
+                "ms-python.vscode-pylance", // IntelliSense and type checking
+                "ms-python.vscode-jupyter" // Jupyter notebooks and interactive Python
+            ]
+        }
+    }
+    // Python testing
+    // "ms-python.vscode-pylint" // Or "ms-python.flake8" for linting
+}

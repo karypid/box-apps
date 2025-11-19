@@ -1,0 +1,14 @@
+[project]
+name = "devcontainer-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mosek>=11.0.29",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.1",
+]
