@@ -1,0 +1,4 @@
+[tools]
+ripgrep = { version = "latest", os = ["linux", "macos"] }
+python = { version = "3.12" }
+uv = { version = "0.9" }
