@@ -11,6 +11,9 @@
     ],
     "updateRemoteUserUID": false,
     "postCreateCommand": ".devcontainer/postCreate.sh",
+    "containerEnv": {
+        "UV_CACHE_DIR": "${containerWorkspaceFolder}/.uv-cache"
+    },
     "customizations": {
         "vscode": {
             "extensions": [
