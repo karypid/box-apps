@@ -5,6 +5,7 @@ let
     name = "Alexandros Karypidis";
     email = "1221101+karypid@users.noreply.github.com";
   };
+
   # used to source nix profile
   nixSourcing = ''
     nix_sh="$HOME/.nix-profile/etc/profile.d/nix.sh"
@@ -12,6 +13,11 @@ let
       source "$nix_sh"
     fi
   '';
+
+  shAliases = {
+    mgs = "mgitstatus -d 3 $DISTROBOX_HOST_HOME/devroot/wc.git";
+    mgsf = "mgitstatus -d 3 -f $DISTROBOX_HOST_HOME/devroot/wc.git";
+  };
 in
 {
   home.packages = with pkgs; [
@@ -23,7 +29,7 @@ in
     mgitstatus
 
     direnv
-    # nixdirenv
+    nix-direnv
     starship
   ];
 
@@ -47,18 +53,25 @@ in
 
   programs.bash = {
     enable = true;
+    shellAliases = shAliases;
     initExtra = nixSourcing;
+    enableCompletion = true;
   };
   programs.zsh = {
     enable = true;
+    shellAliases = shAliases;
     initContent = nixSourcing;
+    enableCompletion = true;
+
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
   };
 
   programs.starship.enable = true;
   programs.direnv = {
     enable = true;
-    # enableZshIntegration = true;
     nix-direnv.enable = true;
+    enableZshIntegration = true;
   };
 
 }
