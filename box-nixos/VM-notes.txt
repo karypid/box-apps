@@ -1,0 +1,21 @@
+Enable guest agents for VM performance
+===========================================
+
+In /etc/nixos/configuration.nix
+
+  # enable KVM guest agents
+  services.qemuGuest.enable = true;
+  services.spice-vdagentd.enable = true;
+
+After changes, to apply configuration
+===========================================
+
+nixos-rebuild dry-run
+nixos-rebuild switch
+nixos-rebuild list-generations
+
+Good tool to install for diffing
+===========================================
+nvd history -s
+nvd history diff <start_path> <end_path>
+
