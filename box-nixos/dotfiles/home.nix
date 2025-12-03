@@ -17,20 +17,23 @@ let
   shAliases = {
     mgs = "mgitstatus -d 3 $DISTROBOX_HOST_HOME/devroot/wc.git";
     mgsf = "mgitstatus -d 3 -f $DISTROBOX_HOST_HOME/devroot/wc.git";
+    hmdiff = "nix profile diff-closures --profile ~/.local/state/nix/profiles/home-manager";
   };
 in
 {
   home.packages = with pkgs; [
-    mesa
-    zed-editor
-
-    riffdiff
-    git
-    mgitstatus
-
     direnv
     nix-direnv
     starship
+
+    git
+    mgitstatus
+    riffdiff
+    helix
+
+    mesa
+    zed-editor
+
   ];
 
   programs.vim = {
@@ -48,7 +51,6 @@ in
     ignores = [
       ".direnv"
     ];
-    #riff.enable = true;
   };
 
   programs.bash = {
@@ -72,6 +74,10 @@ in
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
+  };
+  programs.riff = {
+    enable = true;
+    enableGitIntegration = true;
   };
 
 }
