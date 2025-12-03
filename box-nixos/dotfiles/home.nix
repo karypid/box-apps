@@ -18,6 +18,7 @@ let
     mgs = "mgitstatus -d 3 $DISTROBOX_HOST_HOME/devroot/wc.git";
     mgsf = "mgitstatus -d 3 -f $DISTROBOX_HOST_HOME/devroot/wc.git";
     hmdiff = "nix profile diff-closures --profile ~/.local/state/nix/profiles/home-manager";
+    hmnvd = "home-manager generations | head -n 2 | cut -d' ' -f 7 | tac | xargs nvd diff";
   };
 in
 {
@@ -25,6 +26,7 @@ in
     direnv
     nix-direnv
     starship
+    nvd
 
     git
     mgitstatus
