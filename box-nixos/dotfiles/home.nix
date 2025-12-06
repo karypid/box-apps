@@ -13,6 +13,13 @@ let
       source "$nix_sh"
     fi
   '';
+  hostSourcing = ''
+    # Source host aliases (adjust if your shell init differs)
+    REPO_HOME=$DISTROBOX_HOST_HOME/devroot/wc.git
+    if [[ -f "$DISTROBOX_HOST_HOME/.config/alx-shell/aliases.sh" ]]; then
+      source "$DISTROBOX_HOST_HOME/.config/alx-shell/aliases.sh"
+    fi
+  '';
 
   shAliases = {
     mgs = "mgitstatus -d 3 $DISTROBOX_HOST_HOME/devroot/wc.git";
@@ -58,13 +65,13 @@ in
   programs.bash = {
     enable = true;
     shellAliases = shAliases;
-    initExtra = nixSourcing;
+    initExtra = nixSourcing + hostSourcing;
     enableCompletion = true;
   };
   programs.zsh = {
     enable = true;
     shellAliases = shAliases;
-    initContent = nixSourcing;
+    initContent = nixSourcing + hostSourcing;
     enableCompletion = true;
 
     autosuggestion.enable = true;
