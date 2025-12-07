@@ -10,5 +10,5 @@ nix-channel --update
 nix-shell '<home-manager>' -A install
 sh insert_imports.sh ~/.config/home-manager/home.nix
 rm -f ~/.bash_profile ~/.bashrc ~/.zshrc ~/insert_imports.sh
-home-manager switch
+home-manager switch -j 4 --cores 8
 
