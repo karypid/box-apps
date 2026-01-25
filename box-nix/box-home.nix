@@ -30,6 +30,8 @@ let
   };
 in
 {
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = with pkgs; [
     direnv
     nix-direnv
@@ -44,6 +46,7 @@ in
     mesa
     zed-editor
 
+    vscode
   ];
 
   programs.vim = {
