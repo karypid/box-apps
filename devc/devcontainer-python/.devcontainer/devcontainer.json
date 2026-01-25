@@ -19,7 +19,8 @@
             "extensions": [
                 "ms-python.python", // Core Python support (debugging, running)
                 "ms-python.vscode-pylance", // IntelliSense and type checking
-                "ms-python.vscode-jupyter" // Jupyter notebooks and interactive Python
+                "ms-toolsai.jupyter",  // For core Jupyter support
+                "caenrigen.jupytext-sync"
             ]
         }
     }

@@ -6,7 +6,8 @@ let
     email = "1221101+karypid@users.noreply.github.com";
   };
 
-  # used to source nix profile
+  # used to source nix profile in case of single-user install
+  # not needed for modern Fedora distrobox with official packages (where it is a do-nothing)
   nixSourcing = ''
     nix_sh="$HOME/.nix-profile/etc/profile.d/nix.sh"
     if [ -z "$NIX_PROFILES" ] && [ -e "$nix_sh" ]; then
