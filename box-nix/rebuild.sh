@@ -1,14 +1,18 @@
 #!/bin/bash
 
 NAME=nixbox
+BOX_HOME=~/bx/$NAME
 
-rm -fr ~/bx/$NAME/{.profile,.bash*,.zsh*,.zprofile,.zcompdump,.nix*,.config,.local,.cache}
+rm -fr $BOX_HOME/{.profile,.bash*,.zsh*,.zprofile,.zcompdump,.nix*,.config,.local,.cache}
+mkdir -p $BOX_HOME/.local/share/keyrings
+cp resources/default $BOX_HOME/.local/share/keyrings
+cp resources/Login.keyring $BOX_HOME/.local/share/keyrings
 
 # recreate
 distrobox rm -f $NAME
-distrobox create -i quay.io/fedora/fedora-toolbox:43 --name $NAME --home ~/bx/$NAME --init --additional-packages "systemd"
+distrobox create -i quay.io/fedora/fedora-toolbox:43 --name $NAME --home $BOX_HOME --init --additional-packages "systemd gnome-keyring gnome-keyring-pam seahorse dbus-tools"
 
-# instlal nix package manager
+# install nix package manager
 distrobox enter $NAME -- sudo dnf install -y nix nix-daemon
 distrobox enter $NAME -- sudo systemctl enable --now nix-daemon
 

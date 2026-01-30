@@ -13,6 +13,10 @@ let
     if [ -z "$NIX_PROFILES" ] && [ -e "$nix_sh" ]; then
       source "$nix_sh"
     fi
+    # Start gnome-keyring daemon (Fedora path)
+    if [ -z "$GNOME_KEYRING_CONTROL" ]; then
+      eval "$(/usr/bin/gnome-keyring-daemon --start --components=secrets,ssh)"
+    fi
   '';
   hostSourcing = ''
     # Source host aliases (adjust if your shell init differs)
@@ -36,6 +40,8 @@ in
     direnv
     nix-direnv
     starship
+    atuin
+
     nvd
 
     git
@@ -91,6 +97,18 @@ in
   programs.riff = {
     enable = true;
     enableGitIntegration = true;
+  };
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;   # or enableFishIntegration / etc.
+    enableBashIntegration = true;
+    settings = {
+      records=true; # needed for history sync
+      enter_accept=true;
+      style = "compact";
+      update_check = false;
+      # do not enable dotfiles here, let home-manager deal with those
+    };
   };
 
 }
