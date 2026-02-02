@@ -24,6 +24,6 @@ distrobox enter $NAME -- nix shell home-manager#home-manager --command home-mana
 
 # install personal home manager programs
 echo "Installing home-manager (customized)..."
-cp box-home.nix ~/bx/$NAME/.config/home-manager/box-home.nix
+cp resources/box-home.nix ~/bx/$NAME/.config/home-manager/box-home.nix
 distrobox enter $NAME -- zsh -l -c 'F=$HOME/.config/home-manager/home.nix; (head -n -1 "$F" && echo "  imports = [ ./box-home.nix ];" && tail -n 1 "$F") > /tmp/h.nix && mv /tmp/h.nix "$F" && home-manager switch -b hm-old'
 
