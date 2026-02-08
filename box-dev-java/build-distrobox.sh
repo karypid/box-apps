@@ -5,8 +5,10 @@ _container=${1:-dbox-dev-java}
 echo "Building version: $_version"
 echo "Building image/container: $_container"
 
+BOX_HOME=~/bx/$_container
+
 podman image build -t "$_container" --build-arg ALXVER="${_version}" . && \
-    DBX_CONTAINER_MANAGER=podman DBX_CONTAINER_ALWAYS_PULL=0 distrobox create --image $_container:latest --name $_container || exit 1
+    DBX_CONTAINER_ALWAYS_PULL=0 distrobox create --image $_container:latest --name $_container --home $BOX_HOME || exit 1
 
 # Enter to use the user account's uid/gid to perform initial setup
 distrobox enter -n "$_container" -- sh /container/configure-container.sh || exit 1
