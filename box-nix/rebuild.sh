@@ -27,3 +27,16 @@ echo "Installing home-manager (customized)..."
 cp resources/box-home.nix ~/bx/$NAME/.config/home-manager/box-home.nix
 distrobox enter $NAME -- zsh -l -c 'F=$HOME/.config/home-manager/home.nix; (head -n -1 "$F" && echo "  imports = [ ./box-home.nix ];" && tail -n 1 "$F") > /tmp/h.nix && mv /tmp/h.nix "$F" && home-manager switch -b hm-old'
 
+# add xauth for host
+LINE=$( xauth list | grep $( hostname ) )
+if [ -n "$LINE" ]; then
+  COOKIE=$(echo "$LINE" | awk '{print $3}')
+  touch $BOX_HOME/.Xauthority
+  chmod 600 $BOX_HOME/.Xauthority
+  distrobox enter $NAME -- xauth add :0  MIT-MAGIC-COOKIE-1  $COOKIE
+fi
+
+distrobox enter $NAME -- code --install-extension ms-vscode.cpptools
+distrobox enter $NAME -- code --install-extension ms-vscode.cmake-tools
+distrobox enter $NAME -- code --install-extension ms-python.python
+

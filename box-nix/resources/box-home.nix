@@ -86,17 +86,10 @@ in
 
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-  };
-
-  programs.starship.enable = true;
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    enableZshIntegration = true;
-  };
-  programs.riff = {
-    enable = true;
-    enableGitIntegration = true;
+    oh-my-zsh.enable = true;
+    oh-my-zsh.plugins = [ ];
+    oh-my-zsh.theme = "";
+    # oh-my-zsh.theme = "robbyrussell";
   };
   programs.atuin = {
     enable = true;
@@ -109,6 +102,17 @@ in
       update_check = false;
       # do not enable dotfiles here, let home-manager deal with those
     };
+  };
+
+  programs.starship.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+  };
+  programs.riff = {
+    enable = true;
+    enableGitIntegration = true;
   };
 
 }
