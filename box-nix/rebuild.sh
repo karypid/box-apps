@@ -1,12 +1,18 @@
 #!/bin/bash
 
-NAME=nixbox
+NAME=dbox-dev-nix
 BOX_HOME=~/bx/$NAME
 
-rm -fr $BOX_HOME/{.profile,.bash*,.zsh*,.zprofile,.zcompdump,.nix*,.config,.local,.cache}
+rm -fr $BOX_HOME/{.profile,.bash*,.zsh*,.zprofile,.zcompdump,.nix*,.config,.local,.cache,.ssh}
+# keyring
 mkdir -p $BOX_HOME/.local/share/keyrings
 cp resources/default $BOX_HOME/.local/share/keyrings
 cp resources/Login.keyring $BOX_HOME/.local/share/keyrings
+# prepare for xauth
+touch $BOX_HOME/.Xauthority
+chmod 600 $BOX_HOME/.Xauthority
+# add ssh keys
+ln -s $HOME/.ssh $BOX_HOME/.ssh
 
 # recreate
 distrobox rm -f $NAME
@@ -31,12 +37,12 @@ distrobox enter $NAME -- zsh -l -c 'F=$HOME/.config/home-manager/home.nix; (head
 LINE=$( xauth list | grep $( hostname ) )
 if [ -n "$LINE" ]; then
   COOKIE=$(echo "$LINE" | awk '{print $3}')
-  touch $BOX_HOME/.Xauthority
-  chmod 600 $BOX_HOME/.Xauthority
   distrobox enter $NAME -- xauth add :0  MIT-MAGIC-COOKIE-1  $COOKIE
 fi
 
-distrobox enter $NAME -- code --install-extension ms-vscode.cpptools
-distrobox enter $NAME -- code --install-extension ms-vscode.cmake-tools
-distrobox enter $NAME -- code --install-extension ms-python.python
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cpptools'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cmake-tools'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
+
+sed "s/BOX_NAME/${NAME}/g" "resources/dbox-nix-vscode-aut.desktop" > ~/.local/share/applications/dbox-nix-vscode-aut.desktop
 

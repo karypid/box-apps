@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=VSCode on AUT (on dbox-nixbox)
+Exec=/usr/bin/distrobox-enter -n BOX_NAME -- zsh -l -c 'cd ~/devroot/wc.git/bitbucket.org/trading/aut11/cpp && eval "$(direnv export zsh)" && code --ozone-platform=wayland .'
+Icon=/home/karypid@ad.home.lan/.local/share/icons/nix-vscode.svg
+
