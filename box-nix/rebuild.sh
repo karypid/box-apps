@@ -43,6 +43,13 @@ fi
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cpptools'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cmake-tools'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension vscjava.vscode-java-pack'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension continue.continue'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension mkhl.direnv'
 
+# desktop entry with launcher for VSCode and icon on host
+cp resources/nix-vscode.svg $HOME/.local/share/icons/nix-vscode.svg
 sed "s/BOX_NAME/${NAME}/g" "resources/dbox-nix-vscode-aut.desktop" > ~/.local/share/applications/dbox-nix-vscode-aut.desktop
+echo Icon=$HOME/.local/share/icons/nix-vscode.svg >> ~/.local/share/applications/dbox-nix-vscode-aut.desktop
+
 
