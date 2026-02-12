@@ -40,10 +40,15 @@ if [ -n "$LINE" ]; then
   distrobox enter $NAME -- xauth add :0  MIT-MAGIC-COOKIE-1  $COOKIE
 fi
 
+# c++/java
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cpptools'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cmake-tools'
-distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension vscjava.vscode-java-pack'
+# python/jupyter extensions
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.jupyter'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension donjayamanne.vscode-jupytext'
+# core tools
 distrobox enter $NAME -- zsh -l -c 'code --install-extension continue.continue'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension mkhl.direnv'
 
@@ -51,5 +56,4 @@ distrobox enter $NAME -- zsh -l -c 'code --install-extension mkhl.direnv'
 cp resources/nix-vscode.svg $HOME/.local/share/icons/nix-vscode.svg
 sed "s/BOX_NAME/${NAME}/g" "resources/dbox-nix-vscode-aut.desktop" > ~/.local/share/applications/dbox-nix-vscode-aut.desktop
 echo Icon=$HOME/.local/share/icons/nix-vscode.svg >> ~/.local/share/applications/dbox-nix-vscode-aut.desktop
-
 
