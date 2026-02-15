@@ -46,14 +46,22 @@ in
 
     git
     mgitstatus
-    riffdiff
     helix
 
     mesa
-    zed-editor
+    intel-media-driver
+    libva-utils
+    vulkan-tools
 
+    zed-editor
     vscode
+    xdg-utils
   ];
+
+
+  xdg = {
+    enable = true;
+  };
 
   programs.vim = {
     enable = true;
@@ -80,6 +88,8 @@ in
   };
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
+    # dotDir = "${config.xdg.configHome}/zsh";  # uncomment for new "xdg" location
     shellAliases = shAliases;
     initContent = nixSourcing + hostSourcing;
     enableCompletion = true;
@@ -115,4 +125,16 @@ in
     enableGitIntegration = true;
   };
 
+  programs.chromium = {
+    enable = true;
+    package = pkgs.chromium;  # or pkgs.ungoogled-chromium if preferred
+    commandLineArgs = [
+      "--ozone-platform=wayland"                  # or --ozone-platform-hint=auto if you want fallback
+      "--enable-features=Vulkan,DefaultANGLEVulkan,VulkanFromANGLE,VaapiVideoDecoder,VaapiIgnoreDriverChecks"
+      "--use-gl=angle"
+      "--use-angle=vulkan"                        # ← key for Arc: forces Vulkan ANGLE backend
+      "--enable-zero-copy"
+      "--enable-gpu-rasterization"
+    ];
+  };
 }
