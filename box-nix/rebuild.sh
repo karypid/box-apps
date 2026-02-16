@@ -48,6 +48,9 @@ distrobox enter $NAME -- zsh -l -c 'code --install-extension vscjava.vscode-java
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.jupyter'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension donjayamanne.vscode-jupytext'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.datawrangler'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension mechatroner.rainbow-csv'
+
 # core tools
 distrobox enter $NAME -- zsh -l -c 'code --install-extension continue.continue'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension mkhl.direnv'

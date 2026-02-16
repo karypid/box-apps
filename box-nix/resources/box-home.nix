@@ -56,6 +56,31 @@ in
     zed-editor
     vscode
     xdg-utils
+
+    pandoc
+    (texlive.combine {
+      inherit (texlive)
+        scheme-medium      # ← includes xelatex, latexmk, most common packages
+        xurl               # good for URLs in XeLaTeX
+
+        tcolorbox          # provides tcolorbox.sty + dependencies
+        environ            # required by tcolorbox
+        trimspaces         # required by tcolorbox
+        collectbox         # often pulled by tcolorbox for collect environment
+        pdfcol
+        upquote
+        titling
+        enumitem
+
+        # These are commonly needed by nbconvert-generated .tex and prevent follow-up errors:
+        parskip            # you're already using it in the log
+        adjustbox
+        fontspec           # unicode/font handling in XeLaTeX
+        xcolor             # colors (used heavily)
+        hyperref           # hyperlinks
+        listings           # code listings
+      ;
+    })
   ];
 
 
