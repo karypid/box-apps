@@ -21,7 +21,7 @@ distrobox rm -f $NAME
 distrobox create -i quay.io/fedora/fedora-toolbox:43 --name $NAME --home $BOX_HOME --init --additional-packages "systemd gnome-keyring gnome-keyring-pam seahorse dbus-tools" --volume /mnt:/mnt:ro,rslave
 
 # install nix package manager
-distrobox enter $NAME -- sudo dnf install -y nix nix-daemon
+distrobox enter $NAME -- sudo dnf install -y zsh nix nix-daemon
 distrobox enter $NAME -- sudo systemctl enable --now nix-daemon
 
 # install home manager
