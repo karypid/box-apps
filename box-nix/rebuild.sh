@@ -3,7 +3,9 @@
 NAME=dbox-dev-nix
 BOX_HOME=~/bx/$NAME
 
-rm -fr $BOX_HOME/{.profile,.bash*,.zsh*,.zprofile,.zcompdump,.nix*,.config,.local,.cache,.ssh}
+# stuff this script re-creates
+rm -fr $BOX_HOME/{.profile,.bash*,.zsh*,.zprofile,.zcompdump,.nix*,.config/home-manager,.cache,.ssh}
+
 # keyring
 mkdir -p $BOX_HOME/.local/share/keyrings
 cp resources/default $BOX_HOME/.local/share/keyrings
@@ -16,7 +18,7 @@ ln -s $HOME/.ssh $BOX_HOME/.ssh
 
 # recreate
 distrobox rm -f $NAME
-distrobox create -i quay.io/fedora/fedora-toolbox:43 --name $NAME --home $BOX_HOME --init --additional-packages "systemd gnome-keyring gnome-keyring-pam seahorse dbus-tools"
+distrobox create -i quay.io/fedora/fedora-toolbox:43 --name $NAME --home $BOX_HOME --init --additional-packages "systemd gnome-keyring gnome-keyring-pam seahorse dbus-tools" --volume /mnt:/mnt:ro,rslave
 
 # install nix package manager
 distrobox enter $NAME -- sudo dnf install -y nix nix-daemon
@@ -47,12 +49,13 @@ distrobox enter $NAME -- zsh -l -c 'code --install-extension vscjava.vscode-java
 # python/jupyter extensions
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.jupyter'
-distrobox enter $NAME -- zsh -l -c 'code --install-extension donjayamanne.vscode-jupytext'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.datawrangler'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension mechatroner.rainbow-csv'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension parmentelat.vscode-jupytext-parmentelat'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension kx.kdb'
 
 # core tools
-distrobox enter $NAME -- zsh -l -c 'code --install-extension continue.continue'
+# distrobox enter $NAME -- zsh -l -c 'code --install-extension continue.continue'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension mkhl.direnv'
 
 # desktop entry with launcher for VSCode and icon on host
