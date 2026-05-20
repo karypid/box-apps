@@ -43,15 +43,15 @@ if [ -n "$LINE" ]; then
 fi
 
 # c++/java
-distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cpptools'
-distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cmake-tools'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-vscode.cpptools-extension-pack'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension vscjava.vscode-java-pack'
 # python/jupyter extensions
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-python.python'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.jupyter'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension ms-toolsai.datawrangler'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension mechatroner.rainbow-csv'
-distrobox enter $NAME -- zsh -l -c 'code --install-extension parmentelat.vscode-jupytext-parmentelat'
+# distrobox enter $NAME -- zsh -l -c 'code --install-extension parmentelat.vscode-jupytext-parmentelat'
+distrobox enter $NAME -- zsh -l -c 'code --install-extension caenrigen.jupytext-sync'
 distrobox enter $NAME -- zsh -l -c 'code --install-extension kx.kdb'
 
 # core tools

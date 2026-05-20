@@ -24,6 +24,10 @@ let
     if [[ -f "$DISTROBOX_HOST_HOME/.config/alx-shell/aliases.sh" ]]; then
       source "$DISTROBOX_HOST_HOME/.config/alx-shell/aliases.sh"
     fi
+    # add KDB/Q to path if present
+    if [ -e "$HOME/.kx/bin/q" ] ; then
+      export PATH=$HOME/.kx/bin:$PATH
+    fi
   '';
 
   shAliases = {
@@ -53,6 +57,7 @@ in
     libva-utils
     vulkan-tools
 
+    mise
     zed-editor
     vscode
     xdg-utils
@@ -108,7 +113,9 @@ in
   programs.bash = {
     enable = true;
     shellAliases = shAliases;
-    initExtra = nixSourcing + hostSourcing;
+    initExtra = nixSourcing + hostSourcing + ''
+      eval "$(mise activate bash)"
+    '';
     enableCompletion = true;
   };
   programs.zsh = {
@@ -116,7 +123,9 @@ in
     dotDir = config.home.homeDirectory;
     # dotDir = "${config.xdg.configHome}/zsh";  # uncomment for new "xdg" location
     shellAliases = shAliases;
-    initContent = nixSourcing + hostSourcing;
+    initContent = nixSourcing + hostSourcing + ''
+      eval "$(mise activate zsh)"
+    '';
     enableCompletion = true;
 
     autosuggestion.enable = true;
